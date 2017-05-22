@@ -5,8 +5,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.TextView;
 
-import static android.R.attr.value;
-
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
 
     TextView txtPreview,txtResult;
@@ -73,7 +71,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         // TODO 문자열을 쪼갠후 우선순위에 따라 연산하시오
         // 1. 문자열을 정규식으로 * / + - 을 이용해서 배열로 자른다
-        String splited[] = preview.split("(?<=[*/+-])|(?=[*/+-])");
+        String splitted[] = preview.split("(?<=[*/+-])|(?=[*/+-])");
+        //    예)  123 * 45 + 67 / 89
+        // 결과값 : splitted[0] = 123
+        //         splitted[1] = *
+        //         splitted[2] = 45
+        //         splitted[3] = +
+        //         splitted[4] = 67
+        //         splitted[5] = /
+        //         splitted[6] = 89
 
         return result;
     }
