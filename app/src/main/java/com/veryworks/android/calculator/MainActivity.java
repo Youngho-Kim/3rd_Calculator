@@ -5,6 +5,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.TextView;
 
+import static android.R.attr.value;
+
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
 
     TextView txtPreview,txtResult;
@@ -67,9 +69,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         txtResult.setText(calculate(current));
     }
     private String calculate(String preview){
-        String result = preview;
+        String result = "";
 
         // TODO 문자열을 쪼갠후 우선순위에 따라 연산하시오
+        // 1. 문자열을 정규식으로 * / + - 을 이용해서 배열로 자른다
+        String splited[] = preview.split("(?<=[*/+-])|(?=[*/+-])");
 
         return result;
     }
