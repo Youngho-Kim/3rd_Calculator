@@ -5,6 +5,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
 
     TextView txtPreview,txtResult;
@@ -72,16 +74,53 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         // TODO 문자열을 쪼갠후 우선순위에 따라 연산하시오
         // 1. 문자열을 정규식으로 * / + - 을 이용해서 배열로 자른다
         String splitted[] = preview.split("(?<=[*/+-])|(?=[*/+-])");
-        //    예)  123 * 45 + 67 / 89
-        // 결과값 : splitted[0] = 123
-        //         splitted[1] = *
-        //         splitted[2] = 45
-        //         splitted[3] = +
-        //         splitted[4] = 67
-        //         splitted[5] = /
-        //         splitted[6] = 89
 
-        return result;
+        // 배열을 중간에 삭제하기 위해서 컬렉션을 사용한다.
+        ArrayList<String> list = new ArrayList<>();
+        for(String temp : splitted){
+            list.add(temp);
+        }
+
+        // 반복문이 splitted 을 돌면서 * 와 / 만 먼저 연산해준다
+        for(int i=0; i<list.size() ; i++){
+            String temp = list.get(i);
+            int resultTemp = 0;
+            if(temp.equals("*") || temp.equals("/")){
+                int before = Integer.parseInt(list.get(i-1));
+                int after = Integer.parseInt(list.get(i+1));
+                if(temp.equals("*"))
+                    resultTemp = before * after;
+                else
+                    resultTemp = before / after;
+
+                // 결과값 저장
+                list.set(i, resultTemp+"");
+                list.remove(i+1);
+                list.remove(i-1);
+                i--;
+            }
+        }
+
+        // 반복문이 splitted 을 돌면서 + 와 - 만 먼저 연산해준다
+        for(int i=0; i<list.size() ; i++){
+            String temp = list.get(i);
+            int resultTemp = 0;
+            if(temp.equals("+") || temp.equals("-")){
+                int before = Integer.parseInt(list.get(i-1));
+                int after = Integer.parseInt(list.get(i+1));
+                if(temp.equals("+"))
+                    resultTemp = before + after;
+                else
+                    resultTemp = before - after;
+                // 결과값 저장
+                list.set(i, resultTemp+"");
+                // 필요없는 배열 뒤, 앞 두개 삭제
+                list.remove(i+1);
+                list.remove(i-1);
+                i--;
+            }
+        }
+        return list.get(0);
     }
 
     private void setPreview(int number){
