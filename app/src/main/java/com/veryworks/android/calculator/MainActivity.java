@@ -5,10 +5,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.TextView;
 
+import com.veryworks.android.calculator.util.Logger;
+
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
-
+    private static final String TAG = "Main";
     TextView txtPreview,txtResult;
 
     @Override
@@ -101,7 +103,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
         }
 
-        // 반복문이 splitted 을 돌면서 + 와 - 만 먼저 연산해준다
+        // 반복문이 splitted 을 돌면서 남은 + 와 - 를 연산해준다
         for(int i=0; i<list.size() ; i++){
             String temp = list.get(i);
             int resultTemp = 0;
@@ -125,6 +127,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void setPreview(int number){
         String current = txtPreview.getText().toString();
+        Logger.i(TAG,"로그의내용="+number);
+        Logger.d(TAG,"로그의내용="+number);
+        Logger.w(TAG,"로그의내용="+number);
+        Logger.e(TAG,"로그의내용="+number);
+
         txtPreview.setText(current + number);
     }
 
